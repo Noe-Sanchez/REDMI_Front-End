@@ -1,5 +1,5 @@
 import React, {Component} from 'react' 
-import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity} from 'react-native';
 
 export default class MainView extends Component{
   render(){
@@ -41,11 +41,13 @@ class APIgetter extends Component{
 }
 
 class APIposter extends Component{
-  state = {data_to_post: " "}
+  state = {xvalue: " ",
+           yvalue: " ",
+           zvalue: " "}
 
   makeFetch(){
     console.log('APIposter button trying a Backend fetch');
-    fetch('http://localhost:19004/api', {
+    fetch('http://localhost:19004/api/pos', {
       method: "POST", 
       body: JSON.stringify(this.state),
       headers: {'Content-Type': 'application/json'}
@@ -59,27 +61,43 @@ class APIposter extends Component{
     console.log('Rendering API poster')
     return(
       <View style={styles.rowContainer}>
-	<Button
-	  onPress={this.makeFetch.bind(this)}
-	  title="Hacer post al back"
-	  style={styles.baseButton}
-	/>
+	<TouchableOpacity
+        style={styles.button}
+        onPress={this.makeFetch.bind(this)}>
+          <Text style={styles.baseText}>Send position</Text>
+        </TouchableOpacity>
 	<TextInput
-          placeholder="Valor a postear"
+          placeholder="X value"
 	  style={styles.altText}
-          onChangeText={(value) => this.setState({data_to_post: value})}
-        /> 
+          onChangeText={(value) => this.setState({xvalue: value})}
+        />
+	<TextInput
+          placeholder="Y value"
+	  style={styles.altText}
+          onChangeText={(value) => this.setState({yvalue: value})}
+        />  
+	<TextInput
+          placeholder="Z value"
+	  style={styles.altText}
+          onChangeText={(value) => this.setState({zvalue: value})}
+        />  
       </View>);
   }
 }
 
 const textStyle = {
     fontFamily: 'Consolas',
-    textAlign: 'center'
+    textAlign: 'center',
+    outlineColor: "#F60",
+    outlineStyle: "solid",
+    outlineWidth: 2
 }
 const containerStyle = {
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    outlineColor: "#000",
+    outlineStyle: "solid",
+    outlineWidth: 3
 }
 
 const styles = StyleSheet.create({
@@ -93,7 +111,7 @@ const styles = StyleSheet.create({
   },
   baseButton: {
     fontFamily: 'Consolas',
-    color: '#F60',
+    backgroundColor: '#F60'
   },
   colContainer: {
     flex: 2,
@@ -101,7 +119,7 @@ const styles = StyleSheet.create({
     ...containerStyle
   },
   rowContainer: {
-    flex: 2,
+    flex: 4,
     flexDirection: "row",
     backgroundColor: '#444',
     ...containerStyle
