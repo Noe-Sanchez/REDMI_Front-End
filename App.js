@@ -6,8 +6,8 @@ export default class MainView extends Component{
     console.log('Rendering MainView')
     return(
       <>
-        <APIgetter/>
         <APIposter/>
+        <APIgetter/>
       </>
     );
   }
@@ -47,7 +47,8 @@ class APIposter extends Component{
 
   makeFetch(){
     console.log('APIposter button trying a Backend fetch');
-    fetch('http://localhost:19004/api/pos', {
+    //fetch('http://localhost:19004/api/ros', {
+    fetch('https://0e34-189-152-132-205.ngrok.io/api/ros', {
       method: "POST", 
       body: JSON.stringify(this.state),
       headers: {'Content-Type': 'application/json'}
@@ -86,7 +87,7 @@ class APIposter extends Component{
 }
 
 const textStyle = {
-    fontFamily: 'Consolas',
+    //fontFamily: 'Consolas',
     textAlign: 'center',
     outlineColor: "#F60",
     outlineStyle: "solid",
@@ -107,6 +108,9 @@ const styles = StyleSheet.create({
   },
   altText: {
     color: '#C77',
+    backgroundColor: '#999',
+    borderRadius: 50,
+    padding: 'offset', 
     ...textStyle
   },
   baseButton: {
